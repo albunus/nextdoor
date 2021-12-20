@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block content %}
+<div class="container mt-5">
+  <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-4 slide-holder">
+        <div class="slider">               
+        </div>
+          <img src="/static/image/login.jpg"  alt=""  width="100%" height="100%" id="logo1">
+      </div>
+      
+      <div class="col-md-4 col-sm-8 mt-4">
+          <div class="card pb-1">
+              <div class="card-title mt-4">
+                  
+              </div>
+              <div class="card-body pb-1 mr-3 ml-3">
+                  <form action="/accounts/login/" method="post" novalidate>
+                      {% csrf_token%}
+                      {% bootstrap_form form %}
+                      <button type="submit" class="btn btn-primary btn-sm login"> Log In</button>
+                  </form>
+                  <p class="text-muted mt-3 text-center">---------------------  OR   ---------------------</p>
+                                   
+              </div>
+              <small class="text-muted text-center mb-1"> Don't have an account? <a href="/accounts/register/" class="text-primary">Register</a></small>
+            
+              
+              <small class="text-center mb-2 mt-2 ml-2"><a href="" class="text-center pb-3">Forgot password? </a></small><br>
+              
+          </div>
+      </div>
+      <div class="col-md-2"></div>
+  </div>
+</div>
+
+{% endblock %}

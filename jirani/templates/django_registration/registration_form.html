@@ -1,0 +1,34 @@
+{%extends "registration/base.html"%} 
+{% load bootstrap4 %}
+{% load crispy_forms_tags%}
+{% load static %}
+{% block content %}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-3">
+            <img src="/static/image/undraw_Social_influencer_re_beim.png" alt="" width="100%" height="100%" class="logo">
+        </div>
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-title mt-4">
+                  
+                </div>
+                <div class="card-body mb-2 mr-3 ml-3">
+                    <h6 class="text-center text-muted intro">Sign up to see your nextdoor.</h6>
+                    <form action="/accounts/register/" method="post">
+                        {% csrf_token%}
+                        {% bootstrap_form form %}
+                        <button type="submit" class="btn btn-primary btn-sm login"> Sign up</button>
+                    </form>
+                </div>
+                <small class="text-muted text-center mb-2"> Have an account? <a href="/accounts/login/" class="">Login</a></small>  
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <img src="/static/image/undraw_Social_share_re_qb4v.png" alt="" width="100%"  height="100%" class="logo">
+        </div>
+    </div>
+</div>
+{% endblock %}
