@@ -1,0 +1,54 @@
+{% load bootstrap4 %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+
+    {% if title %}
+    <title>Jirani App - Best Web Design Trends/updates - {{title}}</title>
+    {% else %}
+    <title> JIRANI APP </title>
+    {% endif %}
+    <!-- favico -->
+    <link rel="shortcut icon" href="{% static 'img/favicon.svg'%}">
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <!-- styles -->
+    {% block styles %}
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'css/styles.css'%}">
+    {% endblock %}
+
+</head>
+
+<body>
+    <!-- navbar -->
+    {% include "navbar.html" %}
+    <!-- content -->
+    {% block content %}
+
+    {%endblock%}
+    
+    
+    <!-- scripts -->
+    {% block scripts %}
+    <!-- jquery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    {% bootstrap_javascript %}
+    <!-- ckeditor -->
+    <script src="http://cdn.ckeditor.com/4.11.1/standard/ckeditor.js"></script>
+    {% endblock %}
+
+    
+
+</body>
+
+
+</html>
