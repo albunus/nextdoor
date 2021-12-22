@@ -119,4 +119,31 @@ class Contact(models.Model):
         contact = cls.objects.get(id=id)
         return contact
     def __str__(self):
-        return self.name       
+        return self.name
+
+class Post(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
+    title = models.CharField(max_length=50)
+    content = models.TextField(blank=True, null=True)
+    image = CloudinaryField('image', blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    nextdoor = models.ForeignKey(Nextdoor, on_delete=models.CASCADE, default=1)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    def create_post(self):
+        self.save()
+    def delete_post(self):
+        self.delete()
+    def update_post(self):
+        self.update()
+    @classmethod
+    def search_by_title(cls, search_term):
+        post = cls.objects.filter(title__icontains=search_term)
+        return post
+    @classmethod
+    def find_post(cls, id):
+        post = cls.objects.get(id=id)
+        return post
+    def __str__(self):
+        return self.title       

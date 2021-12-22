@@ -14,12 +14,12 @@ def index(request):
     if profile is None:
                 profile = Profile.objects.filter(user_id=current_user.id).first()
                 locations = Location.objects.all()
-                neighbourhood = NeighbourHood.objects.all()
+                neighbourhood = Nextdoor.objects.all()
                 category = Category.objects.all()
                 businesses = Business.objects.filter(user_id=current_user.id)
                 contacts = Contact.objects.filter(user_id=current_user.id)
                 return render(request, "profile.html", {"danger": "Update Profile by selecting Your Neighbourhood name to continue 😥!!", "locations": locations, "neighbourhood": neighbourhood, "categories": category, "businesses": businesses, "contacts": contacts, "posts": posts})
     else:
         neighbourhood = profile.neighbourhood
-         posts = Post.objects.filter(neighbourhood=neighbourhood).order_by("-created_at")
-          return render(request, 'index.html', {'posts': posts})
+        posts = Post.objects.filter(neighbourhood=neighbourhood).order_by("-created_at")
+        return render(request, 'index.html', {'posts': posts})
