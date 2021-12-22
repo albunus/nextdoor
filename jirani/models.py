@@ -17,4 +17,13 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
+        
+class Location(models.Model):
+    name = models.CharField(max_length=30)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    def save_location(self):
+        self.save()
+    def __str__(self):
+        return self.name
 
