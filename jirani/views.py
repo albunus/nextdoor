@@ -23,3 +23,17 @@ def index(request):
         neighbourhood = profile.neighbourhood
         posts = Post.objects.filter(neighbourhood=neighbourhood).order_by("-created_at")
         return render(request, 'index.html', {'posts': posts})
+    
+@login_required(login_url='/accounts/login/')
+def profile(request):
+    current_user = request.user
+    profile = Profile.objects.filter(user_id=current_user.id).first() 
+    posts = Post.objects.filter(user_id=current_user.id)
+    locations = Location.objects.all()
+    neighbourhood = Nextdoor.objects.all()
+    category = Category.objects.all()
+    businesses = Business.objects.filter(user_id=current_user.id)
+    contacts = Contact.objects.filter(user_id=current_user.id)
+    return render(request, 'profile.html', {'profile': profile, 'posts': posts, 'locations': locations, 'neighbourhood': neighbourhood, 'categories': category, 'businesses': businesses, 'contacts': contacts})
+
+
