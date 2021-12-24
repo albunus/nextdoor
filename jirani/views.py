@@ -83,8 +83,68 @@ def update_profile(request):
         return redirect("/profile", {"success": "Profile Updated Successfully"})
     else:
         return render(request, "profile.html", {"danger": "Profile Update Failed"})
+    
+@login_required(login_url="/accounts/login/")
+def create_post(request):
+    if request.method == "POST":
+        current_user = request.user
+        title = request.POST["title"]
+        content = request.POST["content"]
+        category = request.POST["category"]
+        location = request.POST["location"]
+        profile = Profile.objects.filter(user_id=current_user.id).first()
+        if profile is None:
+            profile = Profile.objects.filter(
+                user_id=current_user.id).first()  # get profile
+            posts = Post.objects.filter(user_id=current_user.id)
+            locations = Location.objects.all()
+            neighbourhood = Nextdoor.objects.all()
+            category = Category.objects.all()
+            businesses = Business.objects.filter(user_id=current_user.id)
+            contacts = Contact.objects.filter(user_id=current_user.id)
+            return render(request, "profile.html", {"danger": "Update Profile by selecting Your Neighbourhood name to continue 😥!!", "locations": locations, "neighbourhood": neighbourhood, "categories": category, "businesses": businesses, "contacts": contacts, "posts": posts})
+        else:
+            neighbourhood = profile.neighbourhood
+        if category == "":
+            category = None
+        else:
+            category = Category.objects.get(name=category)
+        if location == "":
+                location = None
+        else:
+                location = Location.objects.get(name=location)
+        if request.FILES:
+                image = request.FILES["image"]
+                # upload image to cloudinary and crop it to square
+                image = cloudinary.uploader.upload(
+                    image, crop="limit", width=800, height=600)
+                # image = cloudinary.uploader.upload(image)
+                image_url = image["url"]
 
+                post = Post(
+                    user_id=current_user.id,
+                    title=title,
+                    content=content,
+                    image=image_url,
+                    category=category,
+                    location=location,
+                    neighbourhood=neighbourhood,
+                )
+                post.create_post()
 
+                return redirect("/profile", {"success": "Post Created Successfully"})
+        else:
+                post = Post(
+                    user_id=current_user.id,
+                    title=title,
+                    content=content,
+                    category=category,
+                    location=location,
+                    neighbourhood=neighbourhood,
+                )
+                post.create_post()
 
+                return redirect("/profile", {"success": "Post Created Successfully"})
 
-         
+    else:
+            return render(request, "profile.html", {"danger": "Post Creation Failed"})
