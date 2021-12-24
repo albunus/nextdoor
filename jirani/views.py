@@ -148,3 +148,39 @@ def create_post(request):
 
     else:
             return render(request, "profile.html", {"danger": "Post Creation Failed"})
+        
+@login_required(login_url="/accounts/login/")
+def create_business(request):
+    if request.method == "POST":
+        current_user = request.user
+        name = request.POST["name"]
+        email = request.POST["email"]
+        profile = Profile.objects.filter(user_id=current_user.id).first()
+        if profile is None:
+            profile = Profile.objects.filter(user_id=current_user.id).first()
+            posts = Post.objects.filter(user_id=current_user.id)
+            locations = Location.objects.all()
+            neighbourhood = Nextdoor.objects.all()
+            category = Category.objects.all()
+            businesses = Business.objects.filter(user_id=current_user.id)
+            contacts = Contact.objects.filter(user_id=current_user.id)
+            return render(request, "profile.html", {"danger": "Update Profile by selecting Your Neighbourhood name to continue 😥!!", "locations": locations, "neighbourhood": neighbourhood, "categories": category, "businesses": businesses, "contacts": contacts, "posts": posts})
+        else:
+            neighbourhood = profile.neighbourhood
+        if neighbourhood == "":
+            neighbourhood = None
+        else:
+            neighbourhood = Nextdoor.objects.get(name=neighbourhood)
+            business = Business(
+            user_id=current_user.id,
+            name=name,
+            email=email,
+            neighbourhood=neighbourhood,
+        )
+        business.create_business()
+
+        return redirect("/profile", {"success": "Business Created Successfully"})
+    else:
+        return render(request, "profile.html", {"danger": "Business Creation Failed"})
+
+
