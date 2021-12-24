@@ -14,66 +14,16 @@
             height: auto !important;
         }
     }
+
     */
 </style>
-<!-- carousel -->
-<div class="carousel slide" data-bs-ride="carousel" id="carousel-1">
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <div class="bg-light border rounded border-light hero-nature carousel-hero jumbotron py-5 px-4 pt-5">
-                <div class="content-carousel mt-4">
-                    <h6>LGBT Community Center</h6>
-                    <h1 class="hero-title mt-3"><span class="main-color">Become The Change</span> <br>You Want To
-                        See</h1>
-                    <p class="hero-subtitle">Details on the huge Calvin Sandoval celebration coming to Hillcrest on
-                        February 27, 2022 </p>
-                    <p><a class="btn btn-primary btn-lg hero-button" role="button" href="#">Learn more</a></p>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <div class="bg-light border rounded border-light hero-photography carousel-hero jumbotron py-5 px-4">
-                <div class="content-carousel mt-4">
-                    <h6>LGBT Community Center</h6>
-                    <h1 class="hero-title mt-3"><span class="main-color">Become The Change</span> <br>You Want To
-                        See</h1>
-                    <p class="hero-subtitle">Details on the huge Calvin Sandoval celebration coming to Hillcrest on
-                        February 27, 2022 </p>
-                    <p><a class="btn btn-primary btn-lg hero-button" role="button" href="#">Learn more</a></p>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <div class="bg-light border rounded border-light hero-technology carousel-hero jumbotron py-5 px-4">
-                <div class="content-carousel mt-4">
-                    <h6>LGBT Community Center</h6>
-                    <h1 class="hero-title mt-3"><span class="main-color">Become The Change</span> <br>You Want To
-                        See</h1>
-                    <p class="hero-subtitle">Details on the huge Calvin Sandoval celebration coming to Hillcrest on
-                        February 27, 2022 </p>
-                    <p><a class="btn btn-primary btn-lg hero-button" role="button" href="#">Learn more</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div><a class="carousel-control-prev" href="#carousel-1" role="button" data-bs-slide="prev"><span
-                class="carousel-control-prev-icon"></span><span class="visually-hidden">Previous</span></a><a
-            class="carousel-control-next" href="#carousel-1" role="button" data-bs-slide="next"><span
-                class="carousel-control-next-icon"></span><span class="visually-hidden">Next</span></a></div>
-    <ol class="carousel-indicators">
-        <li data-bs-target="#carousel-1" data-bs-slide-to="0" class="active"></li>
-        <li data-bs-target="#carousel-1" data-bs-slide-to="1"></li>
-        <li data-bs-target="#carousel-1" data-bs-slide-to="2"></li>
-    </ol>
-</div>
-
 <!-- blogs -->
 <section class="blog-section" id="posts">
     <div class="container mt-5">
 
         <div class="row mt-4">
 
-            <h2 class="text-center mb-5">Top Posts</h2>
+            <h2 class="text-center mb-5 headings">Latest Posts</h2>
 
             {% for post in posts %}
             <div class="col-md-12 col-lg-3">
@@ -90,9 +40,7 @@
                             <h6 class="fade-item mb-2">{{ post.title }}</h6>
                             <div class="d-flex justify-content-between location-date">
                                 <div>
-                                    <p class="text-uppercase badge rounded-pill bg-warning text-dark text-capitalize">
-                                        {{post.location }}
-                                    </p>
+                                    <p class="text-uppercase badge rounded-pill bg-warning text-dark text-capitalize">{{ post.location }}</p>
                                 </div>
                                 <div>
                                     <p>{{ post.created_at|date }}</p>
@@ -123,8 +71,8 @@
             </div>
 
             <!-- modal -->
-            <div class="modal fade" id="postModal{{ post.id }}" tabindex="-1" role="dialog"
-                aria-labelledby="profileModalLabel" aria-hidden="true">
+            <div class="modal fade" id="postModal{{ post.id }}" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel"
+                aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <!-- <div class="modal-header">
@@ -132,9 +80,9 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div> -->
                         <div class="modal-body">
-                            <p>
-                                {{ post.content }}
-                            </p>
+                        <p>
+                            {{ post.content }}
+                        </p>
                         </div>
 
                     </div>

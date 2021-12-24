@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .card-img-top {
+        width: 100%;
+        height: 15vw !important;
+        object-fit: cover;
+        /* Do not scale the image */
+    }
+
+    /* @media (max-width: 767px) {
+        .card-img-top {
+            height: auto !important;
+        }
+    }
+    */
+</style>
+<!-- blogs -->
+<section class="blog-section" id="posts">
+    <div class="container mt-5">
+
+        <div class="row mt-4">
+
+            <h2 class="text-center mb-5 headings">Businesses Within Your Neighborhood: <br>{{neighbourhood}}
+            </h2>
+
+            
+            {% for biz in businesses %}
+            <div class="col-md-12 col-lg-3">
+                <div class="card" >
+                    <div class="card-body">
+                        <h5 class="card-title text-capitalize">{{ biz.name }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Owner: <span class="badge rounded-pill bg-info text-white">{{ biz.user.first_name }}</span></h6>
+                        <!-- <p class="card-text">{{ biz.description }}</p> -->
+                        <a href="malto:{{ biz.email }}" class="card-link">Email: <span class="text-bold text-primary">{{ biz.email }}</span> </a>
+                       <br>
+                       <!-- <a class="card-link">Neighbourhood: <span class="badge rounded-pill bg-warning text-dark">{{ biz.neighbourhood }}</span> </a> -->
+                    </div>
+                  </div>
+            </div>
+
+            {% empty %}
+            <div class="col-md-12">
+                <div class="card mb-4 post-card">
+                    <div class="card-body text-center">
+                        <h6 class="fade-item mb-2 text-danger">No businesses found within your Neighborhood!!</h6>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+<!-- latest posts section  -->
+{% endblock %}
