@@ -183,4 +183,81 @@ def create_business(request):
     else:
         return render(request, "profile.html", {"danger": "Business Creation Failed"})
 
+@login_required(login_url="/accounts/login/")
+def create_contact(request):
+    if request.method == "POST":
+        current_user = request.user
+        name = request.POST["name"]
+        email = request.POST["email"]
+        phone = request.POST["phone"]
+        profile = Profile.objects.filter(user_id=current_user.id).first()
+        if profile is None:
+            profile = Profile.objects.filter(
+                user_id=current_user.id).first()  # get profile
+            posts = Post.objects.filter(user_id=current_user.id)
+            locations = Location.objects.all()
+            neighbourhood = Nextdoor.objects.all()
+            category = Category.objects.all()
+            businesses = Business.objects.filter(user_id=current_user.id)
+            contacts = Contact.objects.filter(user_id=current_user.id)
+            return render(request, "profile.html", {"danger": "Update Profile by selecting Your Neighbourhood name to continue 😥!!", "locations": locations, "neighbourhood": neighbourhood, "categories": category, "businesses": businesses, "contacts": contacts, "posts": posts})
+        else:
+            neighbourhood = profile.neighbourhood
+        if neighbourhood == "":
+            neighbourhood = None
+        else:
+            neighbourhood = Nextdoor.objects.get(name=neighbourhood)
+
+        contact = Contact(
+            user_id=current_user.id,
+            name=name,
+            email=email,
+            phone=phone,
+            neighbourhood=neighbourhood,
+        )
+        contact.create_contact()
+
+        return redirect("/profile", {"success": "Contact Created Successfully"})
+    else:
+        return render(request, "profile.html", {"danger": "Contact Creation Failed"})
+    
+@login_required(login_url="/accounts/login/")
+def posts(request):
+    current_user = request.user
+    profile = Profile.objects.filter(user_id=current_user.id).first()
+    if profile is None:
+        profile = Profile.objects.filter(
+            user_id=current_user.id).first()  # get profile
+        posts = Post.objects.filter(user_id=current_user.id)
+        ocations = Location.objects.all()
+        neighbourhood = Nextdoor.objects.all()
+        category = Category.objects.all()
+        businesses = Business.objects.filter(user_id=current_user.id)
+        contacts = Contact.objects.filter(user_id=current_user.id)
+        return render(request, "profile.html", {"danger": "Update Profile by selecting Your Neighbourhood name to continue 😥!!", "locations": locations, "neighbourhood": neighbourhood, "categories": category, "businesses": businesses, "contacts": contacts, "posts": posts})
+    else:
+        neighbourhood = profile.neighbourhood
+        posts = Post.objects.filter(neighbourhood=neighbourhood).order_by("-created_at")
+        return render(request, "posts.html", {"posts": posts})
+    
+@login_required(login_url="/accounts/login/")
+def alerts(request):
+    current_user = request.user
+    profile = Profile.objects.filter(user_id=current_user.id).first()
+    if profile is None:
+        profile = Profile.objects.filter(
+            user_id=current_user.id).first()  # get profile
+        posts = Post.objects.filter(user_id=current_user.id)
+        locations = Location.objects.all()
+        neighbourhood = Nextdoor.objects.all()
+        category = Category.objects.all()
+        businesses = Business.objects.filter(user_id=current_user.id)
+        contacts = Contact.objects.filter(user_id=current_user.id)
+        return render(request, "profile.html", {"danger": "Update Profile by selecting Your Neighbourhood name to continue 😥!!", "locations": locations, "neighbourhood": neighbourhood, "categories": category, "businesses": businesses, "contacts": contacts, "posts": posts})
+    else:
+        neighbourhood = profile.neighbourhood
+        category = Category.objects.get(name="alerts")
+        posts = Post.objects.filter(
+            neighbourhood=neighbourhood, category=category).order_by("-created_at")
+        return render(request, "alerts.html", {"posts": posts})
 
