@@ -6,6 +6,22 @@ Albunus Mutuku
 This is a Django web application where users can set profile about them and a general location and their neighborhood name. 
 *****
 
+<img src="static/image/Screenshot from 2021-12-12 21-33-24.png">
+
+ 
+<img src="static/images/Screenshot from 2021-12-25 08-37-18.png">
+<img src="static/images/Screenshot from 2021-12-25 08-37-23.png">
+<img src="static/images/Screenshot from 2021-12-25 08-36-25.png">
+<img src="static/images/Screenshot from 2021-12-25 08-36-30.png">
+ 
+ 
+ <img src="static/images/Screenshot from 2021-12-25 08-36-40.png">
+
+ 
+<img src="static/images/Screenshot from 2021-12-25 08-36-47.png">
+<img src="static/images/Screenshot from 2021-12-25 08-37-46.png">
+<img src="static/images/Screenshot from 2021-12-25 08-37-56.png">
+
 
 ### Home page
 A user is required to register and login to the application and then redirected to home page where a user can see available neighborhoods. 
