@@ -6,7 +6,6 @@ Albunus Mutuku
 This is a Django web application where users can set profile about them and a general location and their neighborhood name. 
 *****
 
-<img src="static/image/Screenshot from 2021-12-12 21-33-24.png">
 
  
 <img src="static/images/Screenshot from 2021-12-25 08-37-18.png">
