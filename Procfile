@@ -1,1 +1,1 @@
-web: gunicorn nextdoor.wsgi
+web: gunicorn jiraniApp.wsgi
