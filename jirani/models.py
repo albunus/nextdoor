@@ -72,7 +72,7 @@ class Profile(models.Model):
 class Business(models.Model):
     name = models.CharField(max_length=50)
     email = models.EmailField(max_length=50)
-    description = models.TextField(max_length=500,)
+    description = models.TextField(max_length=500, blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     nextdoor = models.ForeignKey(Nextdoor, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
