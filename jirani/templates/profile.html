@@ -54,8 +54,8 @@
                 <div class="row mt-3 mb-3">
                     <div class="col-md-12">
                         <div class="card p-2">
-                            <button type="button" class="btn btn-lg m-3" data-bs-toggle="modal"
-                                data-bs-target="#profileModal">
+                            <button type="button" class="btn btn-lg m-3" data-toggle="modal"
+                                data-target="#profileModal">
                                 <i class="fa fa-plus text-white"></i> Update Profile
                             </button>
                             <div class="modal fade" id="profileModal" tabindex="-1" role="dialog"
@@ -98,7 +98,7 @@
                                                             <label for="email">Nextdoor</label>
                                                             <select name="neighbourhood" id="neighbourhood"
                                                                 class="form-control" required>
-                                                                <option value="">Select Neighbourhood</option>
+                                                                <option value="">Select Nextdoor</option>
                                                                 {% for neighbourhood in neighbourhood %}
                                                                 <option value="{{ neighbourhood.name }}">
                                                                     {{neighbourhood.name }}
@@ -162,8 +162,8 @@
                   
                     <!-- button to open add post modal -->
                     <div class="col-md-12">
-                        <button type="button" class="btn btn-lg m-3" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal">
+                        <button type="button" class="btn btn-lg m-3" data-toggle="modal"
+                            data-target="#exampleModal">
                             <i class="fa fa-plus text-white"></i> Add Post
                         </button>
                         <!-- modal -->
@@ -279,7 +279,7 @@
 
                 <!-- button to add business -->
                 <div class="col-md-12">
-                    <button type="button" class="btn btn-lg m-3" data-bs-toggle="modal" data-bs-target="#addBusiness">
+                    <button type="button" class="btn btn-lg m-3" data-toggle="modal" data-target="#addBusiness">
                         <i class="fa fa-plus text-white"></i> Add Business
                     </button>
                     <!-- modal -->
@@ -306,7 +306,7 @@
                                         </div>
                              
                                         <div class="form-group mt-3">
-                                            <label for="exampleFormControlTextarea1">Description</label>
+                                            <label for="description">Business Description</label>
                                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"
                                                 name="description"></textarea>
                                         </div>
@@ -326,7 +326,7 @@
                                 <tr>
                                     <th scope="col">Name</th>
                                     <th scope="col">Email</th>
-                                    <th scope="col">Neighbourhood</th>
+                                    <th scope="col">Nextdoor</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -337,7 +337,7 @@
                                     <td>{{ business.email}}</td>
                                     <td>
                                         <span class="badge rounded-pill bg-info text-white">
-                                            {{ business.neighbourhood}}
+                                            {{ business.nextdoor}}
                                         </span>
                                     </td>
                                    
@@ -363,7 +363,7 @@
 
                 <!-- button to add contacts -->
                 <div class="col-md-12">
-                    <button type="button" class="btn btn-lg m-3" data-bs-toggle="modal" data-bs-target="#addContact">
+                    <button type="button" class="btn btn-lg m-3" data-toggle="modal" data-target="#addContact">
                         <i class="fa fa-plus text-white"></i> Add Contact
                     </button>
                     <!-- modal -->
@@ -410,7 +410,7 @@
                                     <th scope="col">Name</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Phone</th>
-                                    <th scope="col">Neighbourhood</th>
+                                    <th scope="col">Nextdoor</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -422,7 +422,7 @@
                                     <td>{{ contact.phone}}</td>
                                     <td>
                                         <span class="badge rounded-pill bg-info text-white">
-                                            {{ contact.neighbourhood}}
+                                            {{ contact.nextdoor}}
                                         </span>
                                     </td>
                                     <!-- <td><a href="{{ image.url }}" target="_blank" class="text-primary"

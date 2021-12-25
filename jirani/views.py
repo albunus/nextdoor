@@ -10,19 +10,18 @@ import cloudinary.api
 # Create your views here.
 @login_required(login_url='/accounts/login/')
 def index(request):
-    urrent_user = request.user
-    if profile is None:
+    current_user = request.user
+    if Profile is None:
                 profile = Profile.objects.filter(user_id=current_user.id).first()
                 locations = Location.objects.all()
-                neighbourhood = Nextdoor.objects.all()
+                nextdoor = Nextdoor.objects.all()
                 category = Category.objects.all()
                 businesses = Business.objects.filter(user_id=current_user.id)
                 contacts = Contact.objects.filter(user_id=current_user.id)
-                return render(request, "profile.html", {"danger": "Update Profile by selecting Your Neighbourhood name to continue 😥!!", "locations": locations, "neighbourhood": neighbourhood, "categories": category, "businesses": businesses, "contacts": contacts, "posts": posts})
+                return render(request, "profile.html", {"danger": "Update Profile by selecting Your nextdoor name to continue 😥!!", "locations": locations, "nextdoor": nextdoor, "categories": category, "businesses": businesses, "contacts": contacts})
     else:
-        neighbourhood = profile.neighbourhood
-        posts = Post.objects.filter(neighbourhood=neighbourhood).order_by("-created_at")
-        return render(request, 'index.html', {'posts': posts})
+        nextdoor = Profile.nextdoor
+        return render(request, 'index.html')
     
 @login_required(login_url='/accounts/login/')
 def profile(request):
@@ -30,11 +29,11 @@ def profile(request):
     profile = Profile.objects.filter(user_id=current_user.id).first() 
     posts = Post.objects.filter(user_id=current_user.id)
     locations = Location.objects.all()
-    neighbourhood = Nextdoor.objects.all()
+    nextdoor = Nextdoor.objects.all()
     category = Category.objects.all()
     businesses = Business.objects.filter(user_id=current_user.id)
     contacts = Contact.objects.filter(user_id=current_user.id)
-    return render(request, 'profile.html', {'profile': profile, 'posts': posts, 'locations': locations, 'neighbourhood': neighbourhood, 'categories': category, 'businesses': businesses, 'contacts': contacts})
+    return render(request, 'profile.html', {'profile': profile, 'posts': posts, 'locations': locations, 'nextdoor': nextdoor, 'categories': category, 'businesses': businesses, 'contacts': contacts})
 
 
 @login_required(login_url="/accounts/login/")
@@ -46,16 +45,16 @@ def update_profile(request):
         username = request.POST["username"]
         email = request.POST["email"]
         name = request.POST["first_name"] + " " + request.POST["last_name"]
-        neighbourhood = request.POST["neighbourhood"]
+        nextdoor = request.POST["nextdoor"]
         location = request.POST["location"]
         if location == "":
             location = None
         else:
             location = Location.objects.get(name=location)
-        if neighbourhood == "":
-            neighbourhood = None
+        if nextdoor == "":
+            nextdoor = None
         else:
-            neighbourhood = Nextdoor.objects.get(name=neighbourhood)
+            nextdoor = Nextdoor.objects.get(name=nextdoor)
             profile_image = request.FILES["profile_pic"]
             profile_image = cloudinary.uploader.upload(profile_image)
             profile_url = profile_image["url"]
@@ -63,14 +62,14 @@ def update_profile(request):
         if Profile.objects.filter(user_id=current_user.id).exists():
             profile = Profile.objects.get(user_id=current_user.id)
             profile.profile_pic = profile_url
-            profile.neighbourhood = neighbourhood
+            profile.nextdoor = nextdoor
             profile.location = location
             profile.save()
         else:
             profile = Profile(user_id=current_user.id,
                 name=name,
                 profile_pic=profile_url,
-                neighbourhood=neighbourhood,
+                nextdoor=nextdoor,
                 location=location,
             )
             profile.save_profile()
@@ -98,13 +97,13 @@ def create_post(request):
                 user_id=current_user.id).first()  # get profile
             posts = Post.objects.filter(user_id=current_user.id)
             locations = Location.objects.all()
-            neighbourhood = Nextdoor.objects.all()
+            nextdoor = Nextdoor.objects.all()
             category = Category.objects.all()
             businesses = Business.objects.filter(user_id=current_user.id)
             contacts = Contact.objects.filter(user_id=current_user.id)
-            return render(request, "profile.html", {"danger": "Update Profile by selecting Your Neighbourhood name to continue 😥!!", "locations": locations, "neighbourhood": neighbourhood, "categories": category, "businesses": businesses, "contacts": contacts, "posts": posts})
+            return render(request, "profile.html", {"danger": "Update Profile by selecting Your nextdoor name to continue 😥!!", "locations": locations, "nextdoor": nextdoor, "categories": category, "businesses": businesses, "contacts": contacts, "posts": posts})
         else:
-            neighbourhood = profile.neighbourhood
+            nextdoor = profile.nextdoor
         if category == "":
             category = None
         else:
@@ -120,7 +119,6 @@ def create_post(request):
                     image, crop="limit", width=800, height=600)
                 # image = cloudinary.uploader.upload(image)
                 image_url = image["url"]
-
                 post = Post(
                     user_id=current_user.id,
                     title=title,
@@ -128,7 +126,7 @@ def create_post(request):
                     image=image_url,
                     category=category,
                     location=location,
-                    neighbourhood=neighbourhood,
+                    nextdoor=nextdoor,
                 )
                 post.create_post()
 
@@ -140,7 +138,7 @@ def create_post(request):
                     content=content,
                     category=category,
                     location=location,
-                    neighbourhood=neighbourhood,
+                    nextdoor=nextdoor,
                 )
                 post.create_post()
 
@@ -160,22 +158,22 @@ def create_business(request):
             profile = Profile.objects.filter(user_id=current_user.id).first()
             posts = Post.objects.filter(user_id=current_user.id)
             locations = Location.objects.all()
-            neighbourhood = Nextdoor.objects.all()
+            nextdoor = Nextdoor.objects.all()
             category = Category.objects.all()
             businesses = Business.objects.filter(user_id=current_user.id)
             contacts = Contact.objects.filter(user_id=current_user.id)
-            return render(request, "profile.html", {"danger": "Update Profile by selecting Your Neighbourhood name to continue 😥!!", "locations": locations, "neighbourhood": neighbourhood, "categories": category, "businesses": businesses, "contacts": contacts, "posts": posts})
+            return render(request, "profile.html", {"danger": "Update Profile by selecting Your nextdoor name to continue 😥!!", "locations": locations, "nextdoor": nextdoor, "categories": category, "businesses": businesses, "contacts": contacts, "posts": posts})
         else:
-            neighbourhood = profile.neighbourhood
-        if neighbourhood == "":
-            neighbourhood = None
+            nextdoor = profile.nextdoor
+        if nextdoor == "":
+            nextdoor = None
         else:
-            neighbourhood = Nextdoor.objects.get(name=neighbourhood)
+            nextdoor = Nextdoor.objects.get(name=nextdoor)
             business = Business(
             user_id=current_user.id,
             name=name,
             email=email,
-            neighbourhood=neighbourhood,
+            nextdoor=nextdoor,
         )
         business.create_business()
 
@@ -196,24 +194,24 @@ def create_contact(request):
                 user_id=current_user.id).first()  # get profile
             posts = Post.objects.filter(user_id=current_user.id)
             locations = Location.objects.all()
-            neighbourhood = Nextdoor.objects.all()
+            nextdoor = Nextdoor.objects.all()
             category = Category.objects.all()
             businesses = Business.objects.filter(user_id=current_user.id)
             contacts = Contact.objects.filter(user_id=current_user.id)
-            return render(request, "profile.html", {"danger": "Update Profile by selecting Your Neighbourhood name to continue 😥!!", "locations": locations, "neighbourhood": neighbourhood, "categories": category, "businesses": businesses, "contacts": contacts, "posts": posts})
+            return render(request, "profile.html", {"danger": "Update Profile by selecting Your nextdoor name to continue 😥!!", "locations": locations, "nextdoor": nextdoor, "categories": category, "businesses": businesses, "contacts": contacts, "posts": posts})
         else:
-            neighbourhood = profile.neighbourhood
-        if neighbourhood == "":
-            neighbourhood = None
+            nextdoor= profile.nextdoor
+        if nextdoor == "":
+            nextdoor = None
         else:
-            neighbourhood = Nextdoor.objects.get(name=neighbourhood)
+            nextdoor = Nextdoor.objects.get(name=nextdoor)
 
         contact = Contact(
             user_id=current_user.id,
             name=name,
             email=email,
             phone=phone,
-            neighbourhood=neighbourhood,
+            nextdoor=nextdoor,
         )
         contact.create_contact()
 
@@ -229,15 +227,15 @@ def posts(request):
         profile = Profile.objects.filter(
             user_id=current_user.id).first()  # get profile
         posts = Post.objects.filter(user_id=current_user.id)
-        ocations = Location.objects.all()
-        neighbourhood = Nextdoor.objects.all()
+        locations = Location.objects.all()
+        nextdoor = Nextdoor.objects.all()
         category = Category.objects.all()
         businesses = Business.objects.filter(user_id=current_user.id)
         contacts = Contact.objects.filter(user_id=current_user.id)
-        return render(request, "profile.html", {"danger": "Update Profile by selecting Your Neighbourhood name to continue 😥!!", "locations": locations, "neighbourhood": neighbourhood, "categories": category, "businesses": businesses, "contacts": contacts, "posts": posts})
+        return render(request, "profile.html", {"danger": "Update Profile by selecting Your nextdoor name to continue 😥!!", "locations": locations, "nextdoor": nextdoor, "categories": category, "businesses": businesses, "contacts": contacts, "posts": posts})
     else:
-        neighbourhood = profile.neighbourhood
-        posts = Post.objects.filter(neighbourhood=neighbourhood).order_by("-created_at")
+        nextdoor = profile.nextdoor
+        posts = Post.objects.filter(nextdoor=nextdoor).order_by("-created_at")
         return render(request, "posts.html", {"posts": posts})
     
 @login_required(login_url="/accounts/login/")
@@ -249,16 +247,15 @@ def alerts(request):
             user_id=current_user.id).first()  # get profile
         posts = Post.objects.filter(user_id=current_user.id)
         locations = Location.objects.all()
-        neighbourhood = Nextdoor.objects.all()
+        nextdoor = Nextdoor.objects.all()
         category = Category.objects.all()
         businesses = Business.objects.filter(user_id=current_user.id)
         contacts = Contact.objects.filter(user_id=current_user.id)
-        return render(request, "profile.html", {"danger": "Update Profile by selecting Your Neighbourhood name to continue 😥!!", "locations": locations, "neighbourhood": neighbourhood, "categories": category, "businesses": businesses, "contacts": contacts, "posts": posts})
+        return render(request, "profile.html", {"danger": "Update Profile by selecting Your nextdoor name to continue 😥!!", "locations": locations, "nextdoor": nextdoor, "categories": category, "businesses": businesses, "contacts": contacts, "posts": posts})
     else:
-        neighbourhood = profile.neighbourhood
-        category = Category.objects.get(name="alerts")
-        posts = Post.objects.filter(
-            neighbourhood=neighbourhood, category=category).order_by("-created_at")
+        nextdoor = profile.nextdoor
+        category = Category.objects.get(name="Alerts")
+        posts = Post.objects.filter(nextdoor=nextdoor, category=category).order_by("-created_at")
         return render(request, "alerts.html", {"posts": posts})
     
 @login_required(login_url="/accounts/login/")
@@ -270,15 +267,15 @@ def business(request):
             user_id=current_user.id).first()  # get profile
         posts = Post.objects.filter(user_id=current_user.id)
         locations = Location.objects.all()
-        neighbourhood = Nextdoor.objects.all()
+        nextdoor = Nextdoor.objects.all()
         category = Category.objects.all()
         businesses = Business.objects.filter(user_id=current_user.id)
         contacts = Contact.objects.filter(user_id=current_user.id)
-        return render(request, "profile.html", {"danger": "Update Profile by selecting Your Neighbourhood name to continue 😥!!", "locations": locations, "neighbourhood": neighbourhood, "categories": category, "businesses": businesses, "contacts": contacts, "posts": posts})
+        return render(request, "profile.html", {"danger": "Update Profile by selecting Your nextdoor name to continue 😥!!", "locations": locations, "nextdoor": nextdoor, "categories": category, "businesses": businesses, "contacts": contacts, "posts": posts})
     else:
-        neighbourhood = profile.neighbourhood
+        nextdoor = profile.nextdoor
         businesses = Business.objects.filter(
-            neighbourhood=profile.neighbourhood)
+            nextdoor=profile.nextdoor)
         return render(request, "business.html", {"businesses": businesses})
     
 @login_required(login_url="/accounts/login/")
@@ -290,16 +287,16 @@ def contacts(request):
             user_id=current_user.id).first()  # get profile
         posts = Post.objects.filter(user_id=current_user.id)
         locations = Location.objects.all()
-        neighbourhood = Nextdoor.objects.all()
+        nextdoor = Nextdoor.objects.all()
         category = Category.objects.all()
         businesses = Business.objects.filter(user_id=current_user.id)
         contacts = Contact.objects.filter(user_id=current_user.id)
-        return render(request, "profile.html", {"danger": "Update Profile by selecting Your Neighbourhood name to continue 😥!!", "locations": locations, "neighbourhood": neighbourhood, "categories": category, "businesses": businesses, "contacts": contacts, "posts": posts})
+        return render(request, "profile.html", {"danger": "Update Profile by selecting Your nextdoor name to continue 😥!!", "locations": locations, "nextdoor": nextdoor, "categories": category, "businesses": businesses, "contacts": contacts, "posts": posts})
     else:
-        neighbourhood = profile.neighbourhood
+        nextdoor = profile.nextdoor
         contacts = Contact.objects.filter(
-            neighbourhood=profile.neighbourhood).order_by("-created_at")
-        return render(request, "contacts.html", {"contacts": contacts, "neighbourhood": profile.neighbourhood})
+            nextdoor=profile.nextdoor).order_by("-created_at")
+        return render(request, "contacts.html", {"contacts": contacts, "nextdoor": Profile.nextdoor})
     
 @login_required(login_url="/accounts/login/")
 def search(request):

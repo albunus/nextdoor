@@ -59,7 +59,7 @@ class Profile(models.Model):
     name = models.CharField(max_length=50)
     email = models.EmailField(max_length=100, blank=True, null=True)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
-    neighbourhood = models.ForeignKey(Nextdoor, on_delete=models.CASCADE)
+    nextdoor = models.ForeignKey(Nextdoor, on_delete=models.CASCADE)
     profile_pic = CloudinaryField('image')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -72,7 +72,7 @@ class Profile(models.Model):
 class Business(models.Model):
     name = models.CharField(max_length=50)
     email = models.EmailField(max_length=50)
-    description = models.TextField(blank=True, null=True)
+    description = models.TextField(max_length=500,)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     nextdoor = models.ForeignKey(Nextdoor, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -100,7 +100,7 @@ class Contact(models.Model):
     email = models.EmailField(max_length=50, blank=True, null=True)
     phone = models.CharField(max_length=50)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    neighbourhood = models.ForeignKey(Nextdoor, on_delete=models.CASCADE, default=1)
+    nextdoor = models.ForeignKey(Nextdoor, on_delete=models.CASCADE, default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     

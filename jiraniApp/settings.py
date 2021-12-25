@@ -77,7 +77,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'jiraniApp.apps.JiraniAppConfig',
+    'jirani.apps.JiraniConfig',
     'bootstrap4',
     'crispy_forms',
     'cloudinary_storage',
